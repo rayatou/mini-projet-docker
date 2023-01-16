@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    registry:
+        ports:
+            - '4000:5000'
+        environment:
+            - REGISTRY_STORAGE_DELETE_ENABLED=TRUE
+        network_mode: registry_network
+        container_name: registry_rokhaya
+        image: 'registry:2'
+    docker-registry-ui:
+        depends_on:
+            - registry
+        ports:
+            - '8090:80'
+        network_mode: registry_network
+        environment:
+            - REGISTRY_URL=http://registry_rokhaya:5000
+            - DELETE_IMAGES=true
+            - REGISTRY_TITLE=rokhaya
+        container_name: web_gui_registry
+        image: joxit/docker-registry-ui 

@@ -1,0 +1,27 @@
+version: '2'
+services:
+   web:
+     container_name: web
+     image: php:apache
+     environment: 
+       - USERNAME=toto
+       - PASSWORD=python
+     volumes:
+       - ./website/:/var/www/html
+     depends_on:
+       - api
+     ports:
+       - "8080:80"
+     networks:
+       - pozos_network
+   api:
+    container_name: api
+    image: pozos:latest
+    volumes:
+      - ./simple_api/student_age.json:/data/student_age.json
+    ports:
+      - "5000:5000"
+    networks:
+       - pozos_network
+networks:
+  pozos_network:
